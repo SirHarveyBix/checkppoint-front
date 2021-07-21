@@ -1,9 +1,9 @@
-import RemoveMe from './components/RemoveMe';
+import CreationPage from './components/CreationPage';
 
 function App() {
   return (
     <div className="App">
-      <RemoveMe />
+      <CreationPage />
     </div>
   );
 }
