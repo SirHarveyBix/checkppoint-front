@@ -1,0 +1,26 @@
+.putData {
+  display: flex;
+  flex-direction: column;
+}
+.parcours,
+.recipe {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.putItems {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 0 10px 0;
+}
+.btnPut {
+  display: flex;
+  justify-content: center;
+}
+
+.btnWidth {
+  width: 33%;
+  justify-content: center;
+}

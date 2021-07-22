@@ -1,9 +1,9 @@
-import CreationPage from './components/CreationPage';
+import GeneralRouter from './components/GeneralRouter';
 
 function App() {
   return (
     <div className="App">
-      <CreationPage />
+      <GeneralRouter />
     </div>
   );
 }

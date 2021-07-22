@@ -1,3 +1,7 @@
 body {
   margin: 0;
 }
+.putData {
+  display: flex;
+  margin: 10px;
+}
