@@ -1,25 +1,59 @@
 /* eslint-disable react/prop-types */
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { useEffect } from 'react';
 
 export default function EditionRecipeList(props) {
   const { putRecipe, setPutRecipe, recipe } = props;
-  const handlePutRecipe = () => {
-    axios
-      .put(`${process.env.REACT_APP_BACKEND_URL}/recipe`, { putRecipe })
-      .then((response) => {
-        JSON.stringify(
-          response,
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: `Cet élément a été mis à jour`,
-          })
-        );
-      })
-      .then((error) => {
-        console.error(error);
+
+  useEffect(() => {
+    if (
+      (putRecipe.id && !putRecipe.title) ||
+      (putRecipe.id && !putRecipe.ingredient) ||
+      (putRecipe.id && !putRecipe.description)
+    ) {
+      setPutRecipe({
+        ...recipe[putRecipe.id - 1],
+        ingredient: recipe[putRecipe.id - 1].ingredient,
+        title: recipe[putRecipe.id - 1].title,
+        description: recipe[putRecipe.id - 1].description,
       });
+    }
+  }, [putRecipe]);
+
+  const handlePutRecipe = (e) => {
+    e.preventDefault();
+    if (!putRecipe.id) {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: `Aucun element n'a été mis a jour`,
+      });
+    } else {
+      axios
+        .put(`${process.env.REACT_APP_BACKEND_URL}/recipe`, { putRecipe })
+        .then((response) => {
+          JSON.stringify(
+            response,
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: `Cet élément a été mis à jour`,
+            })
+          );
+        })
+        .catch((error) => {
+          JSON.stringify(
+            console.error(error),
+            error,
+            Swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: `Une erreur est servenue.`,
+            })
+          );
+        });
+    }
   };
   return (
     <div className="recipe">
@@ -29,6 +63,7 @@ export default function EditionRecipeList(props) {
             type="submit"
             onSubmit={handlePutRecipe}
             key={item.id}
+            id={item.id}
             className="putItems"
           >
             <input

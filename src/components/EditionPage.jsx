@@ -17,9 +17,9 @@ export default function CreationPage() {
     date: null,
   });
   const [putRecipe, setPutRecipe] = useState({
-    title: '',
-    description: '',
-    ingredient: '',
+    title: null,
+    description: null,
+    ingredient: null,
   });
 
   const getData = async () => {
@@ -50,7 +50,7 @@ export default function CreationPage() {
 
   useEffect(() => {
     getData();
-  }, [parcours]);
+  }, []);
 
   return (
     <div className="putData">

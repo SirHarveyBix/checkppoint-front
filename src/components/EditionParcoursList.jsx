@@ -1,36 +1,33 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 import axios from 'axios';
+import { useEffect } from 'react';
 import Swal from 'sweetalert2';
 
 export default function EditionParcoursList(props) {
   const { putParcours, setPutParcours, parcours } = props;
+  useEffect(() => {
+    if (
+      (putParcours.id && !putParcours.title) ||
+      (putParcours.id && !putParcours.date) ||
+      (putParcours.id && !putParcours.description)
+    ) {
+      setPutParcours({
+        ...parcours[putParcours.id - 1],
+        date: parcours[putParcours.id - 1].date,
+        title: parcours[putParcours.id - 1].title,
+        description: parcours[putParcours.id - 1].description,
+      });
+    }
+  }, [putParcours]);
 
-  // console.log(parcours[putParcours.id].date);
-  const handlePutParcours = () => {
-    // e.preventDefault();
+  const handlePutParcours = (e) => {
+    e.preventDefault();
     if (!putParcours.id) {
       Swal.fire({
         position: 'center',
         icon: 'error',
         title: `Aucun element n'a été mis a jour`,
-      });
-    } else if (putParcours.date === null) {
-      setPutParcours({
-        ...putParcours,
-        date: parcours[putParcours.id - 1].date,
-      });
-    } else if (putParcours.description === null) {
-      setPutParcours({
-        ...putParcours,
-        description: parcours[putParcours.id - 1].description,
-      });
-      console.log(putParcours);
-    } else if (putParcours.title === null) {
-      setPutParcours({
-        ...putParcours,
-        title: parcours[putParcours.id - 1].title,
       });
     } else {
       axios
