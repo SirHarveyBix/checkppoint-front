@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -5,35 +7,59 @@ import Swal from 'sweetalert2';
 export default function EditionParcoursList(props) {
   const { putParcours, setPutParcours, parcours } = props;
 
-  const handlePutParcours = (e) => {
-    e.preventDefault();
-    axios
-      .put(`${process.env.REACT_APP_BACKEND_URL}/parcours`, { putParcours })
-      .then((response) => {
-        JSON.stringify(
-          console.log(response),
-          response,
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: `Cet élément a été mis à jour`,
-          })
-        );
-      })
-      .catch((error) => {
-        JSON.stringify(
-          console.error(error),
-          error,
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: `Une erreur est servenue.`,
-          })
-        );
+  // console.log(parcours[putParcours.id].date);
+  const handlePutParcours = () => {
+    // e.preventDefault();
+    if (putParcours.date === null || undefined) {
+      setPutParcours({
+        ...putParcours,
+        date: parcours[putParcours.id - 1].date,
       });
+    }
+    if (putParcours.description === null || undefined) {
+      setPutParcours({
+        ...putParcours,
+        description: parcours[putParcours.id - 1].description,
+      });
+      console.log(putParcours);
+    }
+    if (putParcours.title === null || undefined) {
+      setPutParcours({
+        ...putParcours,
+        title: parcours[putParcours.id - 1].title,
+      });
+    }
+    if (
+      (putParcours.title &&
+        putParcours.description &&
+        putParcours.date === !null) ||
+      !undefined
+    ) {
+      axios
+        .put(`${process.env.REACT_APP_BACKEND_URL}/parcours`, { putParcours })
+        .then((response) => {
+          JSON.stringify(
+            response,
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: `Cet élément a été mis à jour`,
+            })
+          );
+        })
+        .catch((error) => {
+          JSON.stringify(
+            console.error(error),
+            error,
+            Swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: `Une erreur est servenue.`,
+            })
+          );
+        });
+    }
   };
-  console.log(parcours);
-  console.log(putParcours);
 
   return (
     <div className="putData">
@@ -50,16 +76,6 @@ export default function EditionParcoursList(props) {
                 id={item.id}
                 className="putItems"
               >
-                {console.log(item)}
-                {() => {
-                  if (putParcours.title === null) {
-                    setPutParcours({
-                      ...putParcours,
-                      id: item.id,
-                      title: item.title,
-                    });
-                  }
-                }}
                 <input
                   defaultValue={item.title}
                   htmlFor="title"
@@ -72,7 +88,6 @@ export default function EditionParcoursList(props) {
                     });
                   }}
                 />
-                {console.log(putParcours)}
                 <input
                   defaultValue={item.date}
                   htmlFor="date"

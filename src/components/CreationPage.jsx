@@ -16,20 +16,17 @@ export default function CreationPage() {
   });
   const handleParcours = (event) => {
     event.preventDefault();
-    axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/parcours`, { parcours })
-      .then((response) => {
-        console.log(response);
-      });
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/parcours`, { parcours });
+    // .then((response) => {
+    //   console.log(response);
+    // });
   };
   const handleRecipe = (event) => {
     event.preventDefault();
-    console.log(recipe);
-    axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/recipe`, { recipe })
-      .then((response) => {
-        console.log(response);
-      });
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/recipe`, { recipe });
+    // .then((response) => {
+    //   console.log(response);
+    // });
   };
 
   return (

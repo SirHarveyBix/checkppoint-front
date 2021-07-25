@@ -50,7 +50,7 @@ export default function CreationPage() {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [parcours]);
 
   return (
     <div className="putData">
