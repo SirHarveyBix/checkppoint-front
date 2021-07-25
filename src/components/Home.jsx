@@ -11,9 +11,8 @@ export default function Home() {
       await axios
         .get(`${process.env.REACT_APP_BACKEND_URL}/parcours`)
         .then((response) => {
-          const date = response.data.map((item) => item.date);
-          const dateParsed = date.map((item) => new Date(item));
-          const dateFormated = dateParsed.map((item) =>
+          const date = response.data.map((item) => new Date(item.date));
+          const dateFormated = date.map((item) =>
             item.toLocaleDateString('fr-FR')
           );
           setParcours(

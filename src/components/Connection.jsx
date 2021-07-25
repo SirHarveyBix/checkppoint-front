@@ -1,16 +1,17 @@
 import axios from 'axios';
 import { useState } from 'react';
 
-export default function Connxion() {
+export default function Connection() {
   const [user, setUser] = useState({
     pseudo: '',
     password: '',
   });
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       await axios
-        .get(`${process.env.REACT_APP_BACKEND_URL}/parcours`, user)
+        .post(`${process.env.REACT_APP_BACKEND_URL}/login`, { user })
         .then((response) => {
           setUser(response.data);
         });
@@ -19,11 +20,15 @@ export default function Connxion() {
     }
   };
 
+  console.log(user);
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form type="submit" onSubmit={handleSubmit}>
         <input
-          oChange={(e) =>
+          placeholder="pseudo"
+          name="pseudo"
+          type="text"
+          onChange={(e) =>
             setUser({
               ...user,
               pseudo: e.target.value,
@@ -31,7 +36,10 @@ export default function Connxion() {
           }
         />
         <input
-          oChange={(e) =>
+          placeholder="Mot de passe"
+          type="password"
+          name="password"
+          onChange={(e) =>
             setUser({
               ...user,
               password: e.target.value,

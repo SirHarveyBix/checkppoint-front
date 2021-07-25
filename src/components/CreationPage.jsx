@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 export default function CreationPage() {
+  const history = useHistory(null);
   const [parcours, setParcours] = useState({
     title: '',
     description: '',
@@ -32,7 +34,7 @@ export default function CreationPage() {
 
   return (
     <div>
-      <p>Creer une entrée dans ton parcours</p>
+      <strong>Creer une entrée dans ton parcours</strong>
       <form className="creation" onSubmit={handleParcours}>
         <input
           type="text"
@@ -72,7 +74,7 @@ export default function CreationPage() {
         />
         <button type="submit"> Valider</button>
       </form>
-      <p>Creer une entrée dans tes Recettes</p>
+      <strong>Creer une entrée dans tes Recettes</strong>
       <form className="creation" onSubmit={handleRecipe}>
         <input
           type="text"
@@ -112,6 +114,10 @@ export default function CreationPage() {
         />
         <button type="submit"> Valider</button>
       </form>
+      <br />
+      <button type="button" onClick={() => history.push('/EditData')}>
+        Modifier tes entrées
+      </button>
     </div>
   );
 }
