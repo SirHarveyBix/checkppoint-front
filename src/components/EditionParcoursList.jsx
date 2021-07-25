@@ -10,31 +10,29 @@ export default function EditionParcoursList(props) {
   // console.log(parcours[putParcours.id].date);
   const handlePutParcours = () => {
     // e.preventDefault();
-    if (putParcours.date === null || undefined) {
+    if (!putParcours.id) {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: `Aucun element n'a été mis a jour`,
+      });
+    } else if (putParcours.date === null) {
       setPutParcours({
         ...putParcours,
         date: parcours[putParcours.id - 1].date,
       });
-    }
-    if (putParcours.description === null || undefined) {
+    } else if (putParcours.description === null) {
       setPutParcours({
         ...putParcours,
         description: parcours[putParcours.id - 1].description,
       });
       console.log(putParcours);
-    }
-    if (putParcours.title === null || undefined) {
+    } else if (putParcours.title === null) {
       setPutParcours({
         ...putParcours,
         title: parcours[putParcours.id - 1].title,
       });
-    }
-    if (
-      (putParcours.title &&
-        putParcours.description &&
-        putParcours.date === !null) ||
-      !undefined
-    ) {
+    } else {
       axios
         .put(`${process.env.REACT_APP_BACKEND_URL}/parcours`, { putParcours })
         .then((response) => {
