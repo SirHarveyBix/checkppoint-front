@@ -1,8 +1,12 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 import axios from 'axios';
 import { useEffect } from 'react';
 import Swal from 'sweetalert2';
+import close from './image/close.png';
 
 export default function EditionParcoursList(props) {
   const { putParcours, setPutParcours, parcours } = props;
@@ -55,7 +59,28 @@ export default function EditionParcoursList(props) {
         });
     }
   };
-
+  const handleDelete = (id) => {
+    Swal.fire({
+      position: 'center',
+      icon: 'warning',
+      title: 'voulez vous vraiment supprimer cet element ?',
+      confirmButtonText: 'Oui !',
+      showCancelButton: true,
+      cancelButtonText: 'Non !',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log(parcours[id - 1].title);
+        Swal.fire(
+          `Supprimé !`,
+          `${parcours[id - 1].title} est supprimé!`,
+          'success'
+        );
+        axios.delete(`${process.env.REACT_APP_BACKEND_URL}/parcours`, {
+          id,
+        });
+      }
+    });
+  };
   return (
     <div className="putData">
       <br />
@@ -71,6 +96,16 @@ export default function EditionParcoursList(props) {
                 id={item.id}
                 className="putItems"
               >
+                <div className="btn-close">
+                  <img
+                    src={close}
+                    className="delete"
+                    alt="delete"
+                    onClick={() => {
+                      handleDelete(item.id);
+                    }}
+                  />
+                </div>
                 <input
                   defaultValue={item.title}
                   htmlFor="title"

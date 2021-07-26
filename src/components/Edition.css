@@ -24,3 +24,13 @@
   width: 33%;
   justify-content: center;
 }
+
+.delete {
+  width: 30px;
+  display: flex;
+  cursor: pointer;
+}
+.btn-close {
+  display: flex;
+  justify-content: flex-end;
+}
