@@ -69,7 +69,6 @@ export default function EditionParcoursList(props) {
       cancelButtonText: 'Non !',
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log(parcours[id - 1].title);
         Swal.fire(
           `Supprimé !`,
           `${parcours[id - 1].title} est supprimé!`,
