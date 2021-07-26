@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 export default function CreationPage() {
   const history = useHistory(null);
@@ -16,17 +17,33 @@ export default function CreationPage() {
   });
   const handleParcours = (event) => {
     event.preventDefault();
-    axios.post(`${process.env.REACT_APP_BACKEND_URL}/parcours`, { parcours });
-    // .then((response) => {
-    //   console.log(response);
-    // });
+    axios
+      .post(`${process.env.REACT_APP_BACKEND_URL}/parcours`, { parcours })
+      .then((response) => {
+        JSON.stringify(
+          response,
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: `Cet élément a été mis à jour`,
+          })
+        );
+      });
   };
   const handleRecipe = (event) => {
     event.preventDefault();
-    axios.post(`${process.env.REACT_APP_BACKEND_URL}/recipe`, { recipe });
-    // .then((response) => {
-    //   console.log(response);
-    // });
+    axios
+      .post(`${process.env.REACT_APP_BACKEND_URL}/recipe`, { recipe })
+      .then((response) => {
+        JSON.stringify(
+          response,
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: `Cet élément a été mis à jour`,
+          })
+        );
+      });
   };
 
   return (

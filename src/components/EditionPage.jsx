@@ -78,9 +78,15 @@ export default function CreationPage() {
           />
         )}
       </div>
-      <button type="button" onClick={() => history.push('/CreateData')}>
-        creer de de nouvelles entrées
-      </button>
+      <div className="btnWidth">
+        <button
+          type="button"
+          className="btnPut"
+          onClick={() => history.push('/CreateData')}
+        >
+          creer de de nouvelles entrées
+        </button>
+      </div>
     </div>
   );
 }

@@ -9,7 +9,7 @@ export default function Home() {
   const getRecipe = async () => {
     try {
       await axios
-        .get(`${process.env.REACT_APP_BACKEND_URL}/parcours`)
+        .get(`${process.env.REACT_APP_BACKEND_URL}/recipe`)
         .then((response) => {
           setRecipe(response.data);
         });
