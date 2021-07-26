@@ -26,7 +26,7 @@ export default function EditionParcoursList(props) {
         );
     }
   }, [putParcours]);
-  console.log(putParcours);
+
   const handlePutParcours = (event) => {
     event.preventDefault();
     if (!putParcours.id) {
@@ -63,7 +63,6 @@ export default function EditionParcoursList(props) {
   };
 
   const handleDelete = (id) => {
-    console.log(id);
     const deleteId = id;
     Swal.fire({
       position: 'center',
@@ -79,16 +78,12 @@ export default function EditionParcoursList(props) {
           `${parcours[deleteId - 1].title} est supprimé!`,
           'success'
         );
-        axios
-          .delete(`${process.env.REACT_APP_BACKEND_URL}/parcours/${deleteId}`)
-          .then((response) => {
-            console.log(response);
-          });
+        axios.delete(
+          `${process.env.REACT_APP_BACKEND_URL}/parcours/${deleteId}`
+        );
       }
     });
   };
-
-  console.log(putParcours);
 
   return (
     <div className="putData">

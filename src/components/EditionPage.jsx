@@ -31,7 +31,6 @@ export default function CreationPage() {
           const dateFormated = date.map((item) =>
             item.toLocaleDateString('en-CA')
           );
-          console.log(dateFormated);
           setParcours(
             response.data,
             ...response.data.map(
@@ -48,7 +47,6 @@ export default function CreationPage() {
       console.error(error);
     }
   };
-  console.log(parcours);
   useEffect(() => {
     getData();
   }, []);

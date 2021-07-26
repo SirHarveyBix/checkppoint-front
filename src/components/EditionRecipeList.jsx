@@ -11,16 +11,20 @@ export default function EditionRecipeList(props) {
 
   useEffect(() => {
     if (
-      (putRecipe.id && !putRecipe.title) ||
-      (putRecipe.id && !putRecipe.ingredient) ||
-      (putRecipe.id && !putRecipe.description)
+      (putRecipe.id && putRecipe.title === null) ||
+      (putRecipe.id && putRecipe.ingredient === null) ||
+      (putRecipe.id && putRecipe.description === null)
     ) {
-      setPutRecipe({
-        ...recipe[putRecipe.id - 1],
-        ingredient: recipe[putRecipe.id - 1].ingredient,
-        title: recipe[putRecipe.id - 1].title,
-        description: recipe[putRecipe.id - 1].description,
-      });
+      recipe
+        .filter((item) => item.id === putRecipe.id)
+        .map((item) =>
+          setPutRecipe({
+            ...item,
+            ingredient: item.ingredient,
+            title: item.title,
+            description: item.description,
+          })
+        );
     }
   }, [putRecipe]);
 
@@ -60,6 +64,7 @@ export default function EditionRecipeList(props) {
   };
 
   const handleDelete = (id) => {
+    const deleteId = id;
     Swal.fire({
       position: 'center',
       icon: 'warning',
@@ -71,12 +76,15 @@ export default function EditionRecipeList(props) {
       if (result.isConfirmed) {
         Swal.fire(
           `Supprimé !`,
-          `${recipe[id - 1].title} est supprimé!`,
+          `${recipe[deleteId - 1].title} est supprimé!`,
           'success'
         );
-        axios.delete(`${process.env.REACT_APP_BACKEND_URL}/recipe`, {
-          id,
-        });
+        axios.delete(
+          `${process.env.REACT_APP_BACKEND_URL}/recipe/${deleteId}`,
+          {
+            id,
+          }
+        );
       }
     });
   };
