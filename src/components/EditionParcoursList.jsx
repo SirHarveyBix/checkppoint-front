@@ -1,7 +1,5 @@
-/* eslint-disable no-unused-expressions */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 import axios from 'axios';
 import { useEffect } from 'react';
@@ -12,21 +10,25 @@ export default function EditionParcoursList(props) {
   const { putParcours, setPutParcours, parcours } = props;
   useEffect(() => {
     if (
-      (putParcours.id && !putParcours.title) ||
-      (putParcours.id && !putParcours.date) ||
-      (putParcours.id && !putParcours.description)
+      (putParcours.id && putParcours.date === null) ||
+      (putParcours.id && putParcours.title === null) ||
+      (putParcours.id && putParcours.description) === null
     ) {
-      setPutParcours({
-        ...parcours[putParcours.id - 1],
-        date: parcours[putParcours.id - 1].date,
-        title: parcours[putParcours.id - 1].title,
-        description: parcours[putParcours.id - 1].description,
-      });
+      parcours
+        .filter((item) => item.id === putParcours.id)
+        .map((item) =>
+          setPutParcours({
+            ...item,
+            date: item.date,
+            title: item.title,
+            description: item.description,
+          })
+        );
     }
   }, [putParcours]);
-
-  const handlePutParcours = (e) => {
-    e.preventDefault();
+  console.log(putParcours);
+  const handlePutParcours = (event) => {
+    event.preventDefault();
     if (!putParcours.id) {
       Swal.fire({
         position: 'center',
@@ -59,7 +61,10 @@ export default function EditionParcoursList(props) {
         });
     }
   };
+
   const handleDelete = (id) => {
+    console.log(id);
+    const deleteId = id;
     Swal.fire({
       position: 'center',
       icon: 'warning',
@@ -71,15 +76,20 @@ export default function EditionParcoursList(props) {
       if (result.isConfirmed) {
         Swal.fire(
           `Supprimé !`,
-          `${parcours[id - 1].title} est supprimé!`,
+          `${parcours[deleteId - 1].title} est supprimé!`,
           'success'
         );
-        axios.delete(`${process.env.REACT_APP_BACKEND_URL}/parcours`, {
-          id,
-        });
+        axios
+          .delete(`${process.env.REACT_APP_BACKEND_URL}/parcours/${deleteId}`)
+          .then((response) => {
+            console.log(response);
+          });
       }
     });
   };
+
+  console.log(putParcours);
+
   return (
     <div className="putData">
       <br />
@@ -122,7 +132,7 @@ export default function EditionParcoursList(props) {
                   htmlFor="date"
                   type="date"
                   name="date"
-                  onChange={(e) => {
+                  onSelect={(e) => {
                     setPutParcours({
                       ...putParcours,
                       id: item.id,
