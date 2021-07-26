@@ -1,7 +1,10 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/prop-types */
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useEffect } from 'react';
+import close from './image/close.png';
 
 export default function EditionRecipeList(props) {
   const { putRecipe, setPutRecipe, recipe } = props;
@@ -55,6 +58,28 @@ export default function EditionRecipeList(props) {
         });
     }
   };
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      position: 'center',
+      icon: 'warning',
+      title: 'voulez vous vraiment supprimer cet element ?',
+      confirmButtonText: 'Oui !',
+      showCancelButton: true,
+      cancelButtonText: 'Non !',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          `Supprimé !`,
+          `${recipe[id - 1].title} est supprimé!`,
+          'success'
+        );
+        axios.delete(`${process.env.REACT_APP_BACKEND_URL}/recipe`, {
+          id,
+        });
+      }
+    });
+  };
   return (
     <div className="recipe">
       {recipe.map((item) => {
@@ -66,6 +91,16 @@ export default function EditionRecipeList(props) {
             id={item.id}
             className="putItems"
           >
+            <div className="btn-close">
+              <img
+                src={close}
+                className="delete"
+                alt="delete"
+                onClick={() => {
+                  handleDelete(item.id);
+                }}
+              />
+            </div>
             <input
               id={item.id}
               name="title"
@@ -90,7 +125,6 @@ export default function EditionRecipeList(props) {
                 })
               }
             />
-
             <input
               id={item.id}
               name="description"
@@ -103,7 +137,6 @@ export default function EditionRecipeList(props) {
                 })
               }
             />
-
             <div className="btnWidth">
               <button type="submit" className="btnPut">
                 Mettre à jour
