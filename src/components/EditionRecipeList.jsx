@@ -64,7 +64,6 @@ export default function EditionRecipeList(props) {
   };
 
   const handleDelete = (id) => {
-    const deleteId = id;
     Swal.fire({
       position: 'center',
       icon: 'warning',
@@ -74,17 +73,10 @@ export default function EditionRecipeList(props) {
       cancelButtonText: 'Non !',
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire(
-          `Supprimé !`,
-          `${recipe[deleteId - 1].title} est supprimé!`,
-          'success'
-        );
-        axios.delete(
-          `${process.env.REACT_APP_BACKEND_URL}/recipe/${deleteId}`,
-          {
-            id,
-          }
-        );
+        Swal.fire(`Supprimé !`, 'success');
+        axios.delete(`${process.env.REACT_APP_BACKEND_URL}/recipe/${id}`, {
+          id,
+        });
       }
     });
   };

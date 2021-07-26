@@ -63,7 +63,6 @@ export default function EditionParcoursList(props) {
   };
 
   const handleDelete = (id) => {
-    const deleteId = id;
     Swal.fire({
       position: 'center',
       icon: 'warning',
@@ -73,14 +72,8 @@ export default function EditionParcoursList(props) {
       cancelButtonText: 'Non !',
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire(
-          `Supprimé !`,
-          `${parcours[deleteId - 1].title} est supprimé!`,
-          'success'
-        );
-        axios.delete(
-          `${process.env.REACT_APP_BACKEND_URL}/parcours/${deleteId}`
-        );
+        Swal.fire(`Supprimé !`, 'success');
+        axios.delete(`${process.env.REACT_APP_BACKEND_URL}/parcours/${id}`);
       }
     });
   };
