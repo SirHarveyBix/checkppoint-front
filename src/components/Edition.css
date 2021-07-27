@@ -12,17 +12,19 @@
 .putItems {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   margin: 0 0 10px 0;
+  width: 60%;
+  border-style: groove;
+  border-radius: 10px;
 }
 .btnPut {
   display: flex;
-  justify-content: center;
+
+  cursor: pointer;
 }
 
 .btnWidth {
   width: 33%;
-  justify-content: center;
 }
 
 .delete {

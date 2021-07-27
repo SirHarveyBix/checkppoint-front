@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.imgRecipe {
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+}
+img {
+  width: 50%;
+}
